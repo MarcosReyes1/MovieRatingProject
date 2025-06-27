@@ -14,8 +14,15 @@ export const Home = () => {
 
     const [displayType, setDisplayType] = useState<DisplayType>(DisplayType.Movies);
 
-    const { data: movieData, isLoading: isLoadingMovies} = useQuery({queryKey: ["movies"], queryFn: fetchMovies})
-    const { data: tvShowData, isLoading: isLoadingTvShows} = useQuery({queryKey: ["tvshows"], queryFn: fetchTvShows})
+    const { data: movieData, isLoading: isLoadingMovies} = useQuery({
+        queryKey: ["movies"], 
+        queryFn: fetchMovies
+    })
+    
+    const { data: tvShowData, isLoading: isLoadingTvShows} = useQuery({
+        queryKey: ["tvshows"], 
+        queryFn: fetchTvShows
+    })
 
 
     return (
