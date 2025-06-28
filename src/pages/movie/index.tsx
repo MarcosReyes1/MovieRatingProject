@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom"
-import { Grid, Header, Loader, Segment, Image, List } from "semantic-ui-react"
+import { Grid, Header, Loader, Segment, Image, List, Label } from "semantic-ui-react"
 import { fetchMovieDetails } from "./query";
 
 export const Movie = () => {
@@ -12,7 +12,7 @@ export const Movie = () => {
     }
 
     const { data, isLoading } = useQuery({
-        queryKey: ["movies"], 
+        queryKey: ["movie"], 
         queryFn: () => fetchMovieDetails(id)
     })
 
@@ -51,7 +51,7 @@ export const Movie = () => {
                             <List.Item>
                                 <List.Header>Genres: </List.Header>
                                 {data.genres.map((genre:any) => (
-                                    <List.Item key={genre.id}> {genre.name} </List.Item>
+                                    <Label key={genre.id}> {genre.name} </Label>
                                 ))}
                             </List.Item>
                             <List.Item>
@@ -65,6 +65,26 @@ export const Movie = () => {
                             <List.Item>
                                 <List.Header>Production Companies: </List.Header>
                                 {data.production_companies.map((company: any) => company.name).join(", ")}
+                            </List.Item>
+                            <List.Item>
+                                <List.Header>Release Data: </List.Header>
+                                {data.release_date}
+                            </List.Item>
+                            <List.Item>
+                                <List.Header>Revenue: </List.Header>
+                                {data.revenue}
+                            </List.Item>
+                            <List.Item>
+                                <List.Header>Runtime: </List.Header>
+                                {data.runtime}
+                            </List.Item>
+                            <List.Item>
+                                <List.Header>Vote Average: </List.Header>
+                                {data.vote_average}
+                            </List.Item>
+                            <List.Item>
+                                <List.Header>Language: </List.Header>
+                                {data.original_language}
                             </List.Item>
                         </List>
                     </Grid.Column>
