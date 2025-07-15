@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchRatedMovies, fetchRatedTvShows } from "./query";
 import { ColumnDisplay } from "../home/column-display";
+import { Navigate } from "react-router-dom";
 
 export const Rated = () => {
     const [activeTabs, setActiveTabs] = useState<DisplayType>(DisplayType.Movies);
@@ -18,25 +19,13 @@ export const Rated = () => {
         queryFn: fetchRatedTvShows
     })
 
-// const { data: ratedMovies, isLoading: isLoadingRatedMovies, error } = useQuery({
-//     queryKey: ["ratedMovies"], 
-//     queryFn: async () => {
-//         console.log("Simple query function called!");
-//         return { results: [{ id: 1, title: "Test Movie" }] };
-//     },
-//     enabled: true
-// });
-// fetchRatedMovies()
-//   .then(result => console.log("Direct call result:", result))
-//   .catch(error => console.log("Direct call error:", error));
-//     const { data: ratedTvShows, isLoading: isLoadingRatedTvShows} = useQuery({
-//         queryKey: ["ratedTvShows"], 
-//         queryFn: fetchRatedTvShows
-//     })
-
 if (isLoadingRatedMovies || isLoadingTvShows) {
     return <Loader active/>
 }
+
+if (localStorage.getItem("guest_session_id") === null) {
+        return <Navigate to="/auth"/>
+    }
     
     return (
     <Container style={{marginTop: 50}}>
@@ -55,12 +44,12 @@ if (isLoadingRatedMovies || isLoadingTvShows) {
             {activeTabs === DisplayType.Movies ? (
                 <div>
                     <Header as={"h2"}>Rated Movies</Header>
-                    <ColumnDisplay data={ratedMovies.results} displayType={DisplayType.Movies}/>
+                    <ColumnDisplay data={ratedMovies.results} displayType={DisplayType.Movies} isRated/>
                 </div>
             ) : (
                 <div>
                     <Header as={"h2"}>Rated TV Shows</Header>
-                    <ColumnDisplay data={ratedTvShows.results} displayType={DisplayType.Movies}/>
+                    <ColumnDisplay data={ratedTvShows.results} displayType={DisplayType.TvShows} isRated/>
                 </div>
             )}
         </Segment>
