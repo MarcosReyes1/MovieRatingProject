@@ -8,7 +8,7 @@ import { Navigate } from "react-router-dom";
 
 export const Rated = () => {
     const [activeTabs, setActiveTabs] = useState<DisplayType>(DisplayType.Movies);
-
+    console.log('quick change to test commit')
     const { data: ratedMovies, isLoading: isLoadingRatedMovies} = useQuery({
         queryKey: ["ratedMovies"], 
         queryFn: fetchRatedMovies
